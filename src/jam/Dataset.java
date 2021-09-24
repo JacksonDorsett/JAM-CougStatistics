@@ -65,7 +65,7 @@ class Dataset {
     // And, as a list: [[1],[2],[3]]
     static Dataset parse(String input, int tupleSize) throws DatasetParseException {
         Dataset dataset = parse(input);
-        List<List<Float>> wrongSizeTuples = dataset.data.stream().filter(tuple -> tuple.size() != tupleSize).toList();
+        //List<List<Float>> wrongSizeTuples = dataset.data.stream().filter(tuple -> tuple.size() != tupleSize).toList();
         if (wrongSizeTuples.size() > 0) {
             String tupleString = "";
             String isAre = "";
@@ -77,7 +77,7 @@ class Dataset {
             } else {
                 tupleString = "Tuples";
                 isAre = "are";
-                data = wrongSizeTuples.stream().map(tuple -> tuple.toString()).toList().toString();
+                //data = wrongSizeTuples.stream().map(tuple -> tuple.toString()).toList().toString();
             }
             throw new DatasetParseException(
                     tupleString + " " + data + " " + isAre
