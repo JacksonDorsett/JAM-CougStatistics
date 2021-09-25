@@ -3,6 +3,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 class DatasetParseException extends Exception {
     static final Pattern parenPattern = Pattern.compile("\\)\\s*\\(");
@@ -59,6 +62,9 @@ class Dataset {
     Dataset(List<List<Float>> data) {
         this.data = data;
     }
+    Dataset() {
+        this(new ArrayList<List<Float>>());
+    }
 
     // Note: Right now, tuples of size 1 must be represented as (n)
     // i.e. a dataset containing the numebrs 1, 2, and 3 would be the string "(1),(2),(3)"
@@ -84,6 +90,22 @@ class Dataset {
                             + " not of size " + tupleSize);
         }
         return dataset;
+    }
+    static List<Dataset> parseFile(String path) throws DatasetParseException {
+        File file = new File(path);
+        List<Dataset> datasets = new ArrayList<>();
+
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                tuples.add(Dataset.parse(line));
+            }
+            sc.close();
+        }
+        catch (FileNotFoundException e) {
+        }
+        return datasets;
     }
 
     static Dataset parse(String input) throws DatasetParseException {
