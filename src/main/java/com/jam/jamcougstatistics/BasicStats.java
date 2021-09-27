@@ -1,4 +1,4 @@
-// Ayub Tahir
+package com.jam.jamcougstatistics;// Ayub Tahir
 // BasicStats.java
 // Calculates mean, median, mode, range, and standard deviation.
 
@@ -54,7 +54,7 @@ public class BasicStats {
     }
     
     public static int ModeInt(List<Integer> dataList) {
-        int maxValue, maxCount = 0;
+        int maxValue = 0, maxCount = 0;
 
         for (int i = 0; i < dataList.size(); i++) {
             int count = 0;
@@ -72,7 +72,7 @@ public class BasicStats {
     }
 
     public static double ModeDouble(List<Double> dataList) {
-        double maxValue;
+        double maxValue = 0.0;
         int maxCount = 0;
 
         for (int i = 0; i < dataList.size(); i++) {
