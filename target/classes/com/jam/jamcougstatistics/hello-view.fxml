@@ -129,7 +129,8 @@
          <RadioButton mnemonicParsing="false" selected="true" text="1   ">
             <toggleGroup>
                <ToggleGroup fx:id="dataSlot" />
-            </toggleGroup></RadioButton>
+            </toggleGroup>
+         </RadioButton>
          <RadioButton mnemonicParsing="false" text="2" toggleGroup="$dataSlot" />
       </children>
    </HBox>
