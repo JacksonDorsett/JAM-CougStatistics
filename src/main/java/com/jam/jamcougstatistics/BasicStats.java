@@ -3,134 +3,65 @@ package com.jam.jamcougstatistics;// Ayub Tahir
 // Calculates mean, median, mode, range, and standard deviation.
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BasicStats {
     
-    public static int MeanInt(List<Integer> dataList) {
-        int sum = 0;
-        
-        for (int num : dataList) {
-            sum += num;
-        }
-
-        return sum / dataList.size();
-    }
-
-    public static double MeanDouble(List<Double> dataList) {
+    public static <T extends Number> double Mean(List<T> dataList) {
         double sum = 0;
-
-        for (double num : dataList) {
-            sum += num;
+        
+        for (T num : dataList) {
+            sum += num.doubleValue();
         }
 
         return sum / dataList.size();
     }
 
-    public static double MedianInt(List<Integer> dataList) {
+    public static <T extends Number> double Median(List<T> dataList) {
         int midpoint = dataList.size() / 2;
         // if the list size is even
         if (dataList.size() % 2 == 0) {
-
-            return (dataList.get(midpoint) + dataList.get(midpoint - 1)) / 2;
+            return (dataList.get(midpoint).doubleValue() + dataList.get(midpoint - 1).doubleValue()) / 2.0;
         }
         // if the list size is odd
         else {
-            return dataList.get(midpoint);
+            return dataList.get(midpoint).doubleValue();
         }
     }
     
-    public static double MedianDouble(List<Double> dataList) {
-        int midpoint = dataList.size() / 2;
-        // if the list size is even
-        if (dataList.size() % 2 == 0) {
-
-            return (dataList.get(midpoint) + dataList.get(midpoint - 1)) / 2;
-        }
-        // if the list size is odd
-        else {
-            return dataList.get(midpoint);
-        }
-    }
-    
-    public static int ModeInt(List<Integer> dataList) {
-        int maxValue = 0, maxCount = 0;
-
-        for (int i = 0; i < dataList.size(); i++) {
-            int count = 0;
-            for (int j = 0; j < dataList.size(); j++) {
-                if (dataList.get(j) == dataList.get(i))
-                    count++;
-            }
-            if (count > maxCount) {
-                maxCount = count;
-                maxValue = dataList.get(i);
-            }
-        }
-
-        return maxValue;
-    }
-
-    public static double ModeDouble(List<Double> dataList) {
-        double maxValue = 0.0;
+    public static <T extends Number> T Mode(List<T> dataList) {
+        T maxValue = dataList.get(0);
         int maxCount = 0;
+        Map<T,Integer> counts = new HashMap<>();
 
-        for (int i = 0; i < dataList.size(); i++) {
-            int count = 0;
-            for (int j = 0; j < dataList.size(); j++) {
-                if (dataList.get(j) == dataList.get(i))
-                    count++;
-            }
-            if (count > maxCount) {
-                maxCount = count;
-                maxValue = dataList.get(i);
+        for(T value: dataList) {
+            int oldCount = counts.getOrDefault(value, 0);
+            int newCount = oldCount + 1;
+            counts.put(value, newCount);
+            if (newCount > maxCount) {
+                maxCount = newCount;
+                maxValue = value;
             }
         }
 
         return maxValue;
     }
 
-    public static int RangeInt(List<Integer> dataList) {
-        int max = Collections.max(dataList);
-        int min = Collections.min(dataList);
+    public static <T extends Number & Comparable<T>> double Range(List<T> dataList) {
+        T max = Collections.max(dataList);
+        T min = Collections.min(dataList);
 
-        return max - min;
+        return max.doubleValue() - min.doubleValue();
     }
 
-    public static double RangeDouble(List<Double> dataList) {
-        double max = Collections.max(dataList);
-        double min = Collections.min(dataList);
+    public static <T extends Number> double SD(List<T> dataList) {
+        double mean = Mean(dataList);
+        double stdDev = 0.0;
 
-        return max - min;
-    }
-
-    public static double SDInt(List<Integer> dataList) {
-        double sum = 0.0, stdDev = 0.0;
-
-        for (int num : dataList) {
-            sum += num;
-        }
-
-        double mean = sum / dataList.size();
-
-        for (int num : dataList) {
-            stdDev += Math.pow(num - mean, 2);
-        }
-
-        return Math.sqrt(stdDev / dataList.size());
-    }
-
-    public static double SDDouble(List<Double> dataList) {
-        double sum = 0.0, stdDev = 0.0;
-
-        for (double num : dataList) {
-            sum += num;
-        }
-
-        double mean = sum / dataList.size();
-
-        for (double num : dataList) {
-            stdDev += Math.pow(num - mean, 2);
+        for (T num : dataList) {
+            stdDev += Math.pow(num.doubleValue() - mean, 2);
         }
 
         return Math.sqrt(stdDev / dataList.size());

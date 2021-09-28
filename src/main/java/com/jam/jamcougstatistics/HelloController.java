@@ -31,8 +31,8 @@ public class HelloController {
             warning.showAndWait();
         }
 
-        if (!selected_file.getName().contains(".csv")) {
-            Alert warning = new Alert(Alert.AlertType.ERROR, "file must be a csv file.", ButtonType.CLOSE);
+        if (!selected_file.getName().endsWith(".csv")) {
+            Alert warning = new Alert(Alert.AlertType.ERROR, "File must be a csv file.", ButtonType.CLOSE);
             warning.showAndWait();
         }
     }
