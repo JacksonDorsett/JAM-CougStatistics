@@ -1,57 +1,100 @@
 package com.jam.jamcougstatistics;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 public class HelloController {
+    private int dataSlotIndex = 0;
+    private FileChooser fileChooser;
     @FXML
-    ToggleGroup dataSlot;
+    ToggleGroup dataSlotToggles;
+    @FXML
+    TextField meanOutput;
+    @FXML
+    TextField medianOutput;
+    @FXML
+    TextField modeOutput;
+    @FXML
+    TextField sdOutput;
+    @FXML
+    TextField rangeOutput;
 
-    DataLoader.DataSlots<Integer> slots = new DataLoader.DataSlots<>(2);
     @FXML
-    private Label welcomeText;
+    TextField slot1Output;
+    @FXML
+    TextField slot2Output;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    DataSlots<Integer> slots = new DataSlots<>(2);
+    public void initialize(){
+        setSlotStrings();
+        setOutputs();
+    }
+
+    private void setSlotStrings() {
+        slot1Output.setText(slots.slotString(0));
+        slot2Output.setText(slots.slotString(1));
     }
 
     @FXML
-    protected void onTestClick(){}
+    protected void onTestClick() {
+    }
+
+    protected void setOutputs() {
+        if (slots.hasSlot(dataSlotIndex)) {
+            ArrayList<Integer> slot = slots.getSlot(dataSlotIndex);
+            meanOutput.setText(Double.toString(BasicStats.Mean(slot)));
+            medianOutput.setText(Double.toString(BasicStats.Median(slot)));
+            modeOutput.setText(Double.toString(BasicStats.Mode(slot)));
+            sdOutput.setText(Double.toString(BasicStats.SD(slot)));
+            rangeOutput.setText(Double.toString(BasicStats.Range(slot)));
+        }else{
+            String noDataString = "No data";
+            meanOutput.setText(noDataString);
+            medianOutput.setText(noDataString);
+            modeOutput.setText(noDataString);
+            sdOutput.setText(noDataString);
+            rangeOutput.setText(noDataString);
+        }
+    }
+
+    @FXML
+    protected void SetSlot() {
+        dataSlotIndex = dataSlotToggles.getToggles().indexOf(dataSlotToggles.getSelectedToggle());
+        setOutputs();
+    }
 
     @FXML
     protected void LoadDataClick() throws Exception {
-        FileChooser fileChooser = new FileChooser();
+        if(fileChooser == null){
+        fileChooser = new FileChooser();
         fileChooser.setTitle("Open data set");
         File selected_file = fileChooser.showOpenDialog(new Stage());
-        if (selected_file == null){
+        if (selected_file == null) {
             Alert warning = new Alert(Alert.AlertType.ERROR, "Error file unable to be opened.", ButtonType.CLOSE);
             warning.showAndWait();
-        }else if (!selected_file.getName().endsWith(".csv")) {
+        } else if (!selected_file.getName().endsWith(".csv")) {
             Alert warning = new Alert(Alert.AlertType.ERROR, "File must be a csv file.", ButtonType.CLOSE);
             warning.showAndWait();
         }
 
-        DataLoader.DataSlots<Integer> loadedSlots = DataLoader.LoadDataSet(selected_file);
+        DataSlots<Integer> loadedSlots = DataLoader.LoadDataSet(selected_file);
+
         // If only one dataset is loaded in...
-        if(!loadedSlots.hasSlot(1)){
+        if (!loadedSlots.hasSlot(1)) {
             // Load it into the selected slot
-            int index = dataSlot.getToggles().indexOf(dataSlot.getSelectedToggle());
-            slots.setSlot(index, loadedSlots.slots.get(0));
-        }else{
+            slots.setSlot(dataSlotIndex, loadedSlots.getSlot(0));
+        } else {
             // Otherwise, load both in
             slots.assignSlotsFrom(loadedSlots);
         }
-        String s1 = slots.hasSlot(0)?slots.slots.get(0).toString():"null";
-        String s2 = slots.hasSlot(1)?slots.slots.get(1).toString():"null";
-        System.out.printf("Slot 1:%s\nSlot 2:%s\n",s1,s2);
+        setSlotStrings();
+        setOutputs();
+            fileChooser = null;
+        }
     }
 }

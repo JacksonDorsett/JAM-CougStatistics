@@ -24,7 +24,43 @@
      <tabs>
          <Tab text="General 1-variable Stats">
            <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <VBox layoutX="14.0" layoutY="31.0" prefHeight="214.0" prefWidth="385.0">
+                        <children>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Mean:" />
+                                 <TextField id="testUsedBox" fx:id="meanOutput" editable="false" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Median:" />
+                                 <TextField id="sampleUsedBox" fx:id="medianOutput" editable="false" />
+                              </children>
+                           </HBox>
+                           <HBox id="scoreBox" prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Mode:" />
+                                 <TextField id="scoreBox" fx:id="modeOutput" editable="false" prefHeight="26.0" prefWidth="160.0" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Standard deviation:" />
+                                 <TextField id="significanceBox" fx:id="sdOutput" editable="false" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Range:" />
+                                 <TextField id="testPassedBox" fx:id="rangeOutput" editable="false" />
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children></AnchorPane>
            </content>
          </Tab>
        <Tab text="Hypothesis Testing">
@@ -126,13 +162,29 @@
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
          <Label text="Data Slot: " />
-         <RadioButton mnemonicParsing="false" selected="true" text="1   ">
+         <RadioButton mnemonicParsing="false" onAction="#SetSlot" selected="true" text="1   ">
             <toggleGroup>
-               <ToggleGroup fx:id="dataSlot" />
+               <ToggleGroup fx:id="dataSlotToggles" />
             </toggleGroup>
          </RadioButton>
-         <RadioButton mnemonicParsing="false" text="2" toggleGroup="$dataSlot" />
+         <RadioButton mnemonicParsing="false" onAction="#SetSlot" text="2" toggleGroup="$dataSlotToggles" />
       </children>
    </HBox>
+   <VBox prefHeight="214.0" prefWidth="385.0">
+      <children>
+         <HBox prefHeight="20.0" prefWidth="385.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="45.0" text="Slot 1:" />
+               <TextField id="scoreBox" fx:id="slot1Output" editable="false" prefHeight="26.0" prefWidth="160.0" />
+            </children>
+         </HBox>
+         <HBox prefHeight="20.0" prefWidth="385.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="45.0" text="Slot 2:" />
+               <TextField id="scoreBox" fx:id="slot2Output" editable="false" prefHeight="26.0" prefWidth="160.0" />
+            </children>
+         </HBox>
+      </children>
+   </VBox>
    <Button alignment="TOP_RIGHT" mnemonicParsing="false" onMouseClicked="#LoadDataClick" text="Load Data" />
 </VBox>

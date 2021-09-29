@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BasicStats {
     
@@ -20,14 +21,15 @@ public class BasicStats {
     }
 
     public static <T extends Number> double Median(List<T> dataList) {
-        int midpoint = dataList.size() / 2;
+        List<T> sorted = dataList.stream().sorted().collect(Collectors.toList());
+        int midpoint = sorted.size() / 2;
         // if the list size is even
-        if (dataList.size() % 2 == 0) {
-            return (dataList.get(midpoint).doubleValue() + dataList.get(midpoint - 1).doubleValue()) / 2.0;
+        if (sorted.size() % 2 == 0) {
+            return (sorted.get(midpoint).doubleValue() + sorted.get(midpoint - 1).doubleValue()) / 2.0;
         }
         // if the list size is odd
         else {
-            return dataList.get(midpoint).doubleValue();
+            return sorted.get(midpoint).doubleValue();
         }
     }
     
