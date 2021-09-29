@@ -40,7 +40,7 @@ public class HelloController {
     @FXML
     TextField slot2Output;
 
-    DataSlots<Integer> slots = new DataSlots<>(2);
+    DataSlots<Double> slots = new DataSlots<>(2);
 
     public void initialize() {
         tScoreMu.textProperty().addListener((observable, oldValue, newValue)->{
@@ -62,7 +62,7 @@ public class HelloController {
     private void setZScore(String xString) {
         try {
             float x = Float.parseFloat(xString);
-            ArrayList<Integer> slot = slots.getSlot(dataSlotIndex);
+            ArrayList<Double> slot = slots.getSlot(dataSlotIndex);
             double zScore = ZCalculator.ZScore(slot, x);
             zScoreOutput.setText(Double.toString(zScore));
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class HelloController {
     private void setTScore(String muString) {
         try {
             float mu = Float.parseFloat(muString);
-            ArrayList<Integer> slot = slots.getSlot(dataSlotIndex);
+            ArrayList<Double> slot = slots.getSlot(dataSlotIndex);
             double tScore = TCalculator.TScore(slot, mu);
             tScoreOutput.setText(Double.toString(tScore));
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class HelloController {
 
     protected void setGeneralOutputs() {
         if (slots.hasSlot(dataSlotIndex)) {
-            ArrayList<Integer> slot = slots.getSlot(dataSlotIndex);
+            ArrayList<Double> slot = slots.getSlot(dataSlotIndex);
             meanOutput.setText(Double.toString(BasicStats.Mean(slot)));
             medianOutput.setText(Double.toString(BasicStats.Median(slot)));
             modeOutput.setText(Double.toString(BasicStats.Mode(slot)));
@@ -128,7 +128,7 @@ public class HelloController {
                 warning.showAndWait();
             }
 
-            DataSlots<Integer> loadedSlots = DataLoader.LoadDataSet(selected_file);
+            DataSlots<Double> loadedSlots = DataLoader.LoadDataSet(selected_file);
 
             // If only one dataset is loaded in...
             if (!loadedSlots.hasSlot(1)) {

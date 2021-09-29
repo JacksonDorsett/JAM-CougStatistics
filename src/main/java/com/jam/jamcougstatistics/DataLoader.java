@@ -41,14 +41,14 @@ public class DataLoader {
         return max;
     }
 
-    public static ArrayList<Integer> LoadSingleDataSet(File file) throws Exception {
+    public static ArrayList<Double> LoadSingleDataSet(File file) throws Exception {
         InputStream ifstream = new FileInputStream(file);
         InputStreamReader ireader = new InputStreamReader(ifstream);
         BufferedReader reader = new BufferedReader(ireader);
-        ArrayList<Integer> ret = new ArrayList<>();
+        ArrayList<Double> ret = new ArrayList<>();
         for (String line : reader.lines().toArray(String[]::new)) {
             try {
-                ret.add(Integer.parseInt(line));
+                ret.add(Double.parseDouble(line));
             } catch (Exception e) {
                 throw new Exception();
             }
@@ -56,30 +56,30 @@ public class DataLoader {
         return ret;
     }
 
-    public static DataSlots<Integer> LoadDataSet(File file) throws Exception {
+    public static DataSlots<Double> LoadDataSet(File file) throws Exception {
         InputStream ifstream = new FileInputStream(file);
         InputStreamReader ireader = new InputStreamReader(ifstream);
         BufferedReader reader = new BufferedReader(ireader);
 
-        DataSlots<Integer> data = new DataSlots<>(2);
+        DataSlots<Double> data = new DataSlots<>(2);
         for (String line : reader.lines().toArray(String[]::new)) {
             String[] splitLine = line.split(",");
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i].length() == 0) {
                     continue;
                 }
-                data.addToSlot(i, Integer.parseInt(splitLine[i]));
+                data.addToSlot(i, Double.parseDouble(splitLine[i]));
             }
         }
         return data;
     }
 
-    public static DataSlots<Integer> LoadDoubleDataSet(File file) throws Exception {
+    public static DataSlots<Double> LoadDoubleDataSet(File file) throws Exception {
         InputStream ifstream = new FileInputStream(file);
         InputStreamReader ireader = new InputStreamReader(ifstream);
         BufferedReader reader = new BufferedReader(ireader);
 
-        DataSlots<Integer> data = new DataSlots<>(2);
+        DataSlots<Double> data = new DataSlots<>(2);
         for (String line : reader.lines().toArray(String[]::new)) {
             String[] splitLine = line.split(",");
             if (splitLine.length != 2) throw new Exception();
@@ -87,7 +87,7 @@ public class DataLoader {
                 if (splitLine[i].length() == 0) {
                     continue;
                 }
-                data.addToSlot(i, Integer.parseInt(splitLine[i]));
+                data.addToSlot(i, Double.parseDouble(splitLine[i]));
             }
         }
         return data;
