@@ -40,6 +40,35 @@ public class HelloController {
     @FXML
     TextField slot2Output;
 
+    @FXML
+    TextField populationField;
+
+    @FXML
+    CheckBox usePopulation;
+
+    @FXML
+    ToggleGroup alphaGroup;
+
+    @FXML
+    ToggleGroup testType;
+
+    @FXML
+    TextField testPassedBox;
+
+    @FXML
+    TextField testUsedBox;
+
+    @FXML
+    TextField sampleUsedBox;
+
+    @FXML
+    TextField scoreBox;
+
+    @FXML
+    TextField significanceBox;
+
+
+
     DataSlots<Double> slots = new DataSlots<>(2);
 
     public void initialize() {
@@ -83,6 +112,82 @@ public class HelloController {
 
     @FXML
     protected void onTestClick() {
+
+        try {
+            ArrayList<Double> slot = slots.getSlot(dataSlotIndex);
+            double mu;
+            double expectedSig;
+            int tType;
+            if (!usePopulation.isSelected()){
+                if (slot.size() < 40){
+                    throw new Exception("Error: population must be specified with under 40 samples");
+                }
+                mu = BasicStats.SD(slot);
+
+                System.out.println(mu);
+            }
+            else{
+                if (populationField.getText() == ""){
+                    throw new Exception("Error: population must be specified");
+                }
+                mu = Double.parseDouble(populationField.getText());
+
+            }
+            // Get expected significance.
+            int i = alphaGroup.getToggles().indexOf(alphaGroup.getSelectedToggle());
+            switch (i){
+                case 0:
+                    expectedSig = .1;
+                    break;
+                case 1:
+                    expectedSig = .05;
+                    break;
+                case 2:
+                    expectedSig = .01;
+                    break;
+                default:
+                    throw new Exception("please select a significance value.");
+            }
+
+            // Get Test Type
+            switch (testType.getToggles().indexOf(testType.getSelectedToggle())){
+                case 0:
+                    tType = -1;
+                    break;
+                case 1:
+                    tType = 1;
+                    break;
+                case 2:
+                    tType = 0;
+                    break;
+                default:
+                    throw new Exception("please select a test type.");
+            }
+            HypothesisTester ht = new HypothesisTester();
+            setTestResults(ht.TestHypothesis(slot,mu,tType,expectedSig));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            setTestResults(null);
+            Alert a = new Alert(Alert.AlertType.ERROR,e.toString());
+            a.showAndWait();
+
+        }
+    }
+
+    protected void setTestResults(TestSummary summary){
+        if (summary == null){
+            testUsedBox.setText(noDataString);
+            sampleUsedBox.setText(noDataString);
+            scoreBox.setText(noDataString);
+            significanceBox.setText(noDataString);
+            testPassedBox.setText(noDataString);
+        }
+
+        testUsedBox.setText(summary.getTestType());
+        scoreBox.setText(((Double)summary.getSignificanceScore()).toString());
+        sampleUsedBox.setText(slots.slotString(dataSlotIndex));
+        significanceBox.setText(((Double) summary.getExpectedSignificance()).toString());
+        testPassedBox.setText(((Boolean)summary.isTestPassed()).toString());
     }
 
     protected void setOutputs() {

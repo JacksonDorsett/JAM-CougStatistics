@@ -71,8 +71,8 @@
                         <children>
                            <HBox prefHeight="29.0" prefWidth="350.0">
                               <children>
-                                 <TextField id="populationField" promptText="Population Average" />
-                                 <CheckBox id="use" mnemonicParsing="false" selected="true" text="population mean known" />
+                                 <TextField id="populationField" fx:id="populationField" promptText="Population Average" />
+                                 <CheckBox id="usePopulation" fx:id="usePopulation" mnemonicParsing="false" selected="true" text="population mean known" />
                               </children>
                            </HBox>
                            <VBox prefHeight="193.0" prefWidth="385.0">
@@ -90,13 +90,13 @@
                                     </children>
                                  </HBox>
                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Test Type" />
-                                 <RadioButton mnemonicParsing="false" selected="true" text="≥">
+                                 <RadioButton id="geq" mnemonicParsing="false" selected="true" text="≥">
                                     <toggleGroup>
                                        <ToggleGroup fx:id="testType" />
                                     </toggleGroup>
                                  </RadioButton>
-                                 <RadioButton mnemonicParsing="false" text="≤ " toggleGroup="$testType" />
-                                 <RadioButton mnemonicParsing="false" text="≠" toggleGroup="$testType" />
+                                 <RadioButton id="leq" mnemonicParsing="false" text="≤ " toggleGroup="$testType" />
+                                 <RadioButton id="neq" mnemonicParsing="false" text="≠" toggleGroup="$testType" />
                                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
                                    <buttons>
                                      <Button id="testHypothesisButton" mnemonicParsing="false" onMouseClicked="#onTestClick" text="Test" />
@@ -110,31 +110,31 @@
                                  <HBox prefHeight="20.0" prefWidth="385.0">
                                     <children>
                                        <Label text="Test Used:     " />
-                                       <TextField id="testUsedBox" editable="false" />
+                                       <TextField id="testUsedBox" fx:id="testUsedBox" editable="false" />
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="20.0" prefWidth="385.0">
                                     <children>
                                        <Label text="Sample Used:" />
-                                       <TextField id="sampleUsedBox" editable="false" />
+                                       <TextField id="sampleUsedBox" fx:id="sampleUsedBox" editable="false" />
                                     </children>
                                  </HBox>
                                  <HBox id="scoreBox" prefHeight="20.0" prefWidth="385.0">
                                     <children>
                                        <Label text="Score           : " />
-                                       <TextField id="scoreBox" editable="false" />
+                                       <TextField id="scoreBox" fx:id="scoreBox" editable="false" />
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="20.0" prefWidth="385.0">
                                     <children>
                                        <Label text="Significance:  " />
-                                       <TextField id="significanceBox" editable="false" />
+                                       <TextField id="significanceBox" fx:id="significanceBox" editable="false" />
                                     </children>
                                  </HBox>
                                  <HBox prefHeight="20.0" prefWidth="385.0">
                                     <children>
                                        <Label text="Test Passed:  " />
-                                       <TextField id="testPassedBox" editable="false" />
+                                       <TextField id="testPassedBox" fx:id="testPassedBox" editable="false" />
                                     </children>
                                  </HBox>
                               </children>

@@ -8,6 +8,7 @@ module com.jam.jamcougstatistics {
     requires validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires commons.math3;
 
     opens com.jam.jamcougstatistics to javafx.fxml;
     exports com.jam.jamcougstatistics;
