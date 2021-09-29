@@ -144,15 +144,52 @@
                   </children></AnchorPane>
          </content>
        </Tab>
-       <Tab text="Untitled Tab 2">
+       <Tab text="Z-Score">
          <content>
-           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="919.0" />
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="919.0">
+                  <children>
+                     <VBox layoutX="14.0" layoutY="31.0" prefHeight="214.0" prefWidth="385.0">
+                        <children>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Value:" />
+                                 <TextField id="testUsedBox" fx:id="zScoreX" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Z-Score:" />
+                                 <TextField id="sampleUsedBox" fx:id="zScoreOutput" editable="false" />
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children></AnchorPane>
          </content>
        </Tab>
-         <Tab text="Untitled Tab">
-           <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-           </content>
+         <Tab text="T-Score">
+            <content>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="919.0">
+                  <children>
+                     <VBox layoutX="14.0" layoutY="31.0" prefHeight="214.0" prefWidth="385.0">
+                        <children>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="Population mean:" />
+                                 <TextField id="testUsedBox" fx:id="tScoreMu" />
+                              </children>
+                           </HBox>
+                           <HBox prefHeight="20.0" prefWidth="385.0">
+                              <children>
+                                 <Label prefHeight="17.0" prefWidth="120.0" text="T-Score:" />
+                                 <TextField id="sampleUsedBox" fx:id="tScoreOutput" editable="false" />
+                              </children>
+                           </HBox>
+                        </children>
+                     </VBox>
+                  </children>
+               </AnchorPane>
+            </content>
          </Tab>
      </tabs>
    </TabPane>
@@ -161,8 +198,8 @@
    <Separator prefWidth="200.0" />
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-         <Label text="Data Slot: " />
-         <RadioButton mnemonicParsing="false" onAction="#SetSlot" selected="true" text="1   ">
+         <Label prefHeight="17.0" prefWidth="68.0" text="Data Slot: " />
+         <RadioButton mnemonicParsing="false" onAction="#SetSlot" prefHeight="18.0" prefWidth="42.0" selected="true" text="1">
             <toggleGroup>
                <ToggleGroup fx:id="dataSlotToggles" />
             </toggleGroup>

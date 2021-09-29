@@ -1,4 +1,4 @@
-/*
+package com.jam.jamcougstatistics;/*
 Written by Anthony Nguyen
 Z-score calculator
 Does exactly what you think
@@ -10,13 +10,13 @@ public class ZCalculator    {
     /* 
         Takes in a list of floats as the sample, and an observed value x. Proceeds to calculate the z score using the given input.
     */
-    public static float ZScore(List<Float> input, float x)  {
+    public static <T extends Number> float ZScore(List<T> input, float x)  {
 
         // Calculate the sum of the input list through an elementary for loop
         // I'm sure there's a better way but I'm just too lazy
         float sum = 0;
-        for (float i : input)
-            sum += i;
+        for (T i : input)
+            sum += i.floatValue();
         
         // Calculate the mean through a hyper advanced formula beyond comprehension
         float mean = sum / input.size();
@@ -25,8 +25,8 @@ public class ZCalculator    {
 
         // Calculating the standard deviation
         float deviations = 0;
-        for(float i : input)
-            deviations += Math.pow(i - mean, 2);
+        for(T i : input)
+            deviations += Math.pow(i.floatValue() - mean, 2);
 
         float sd = (float) Math.sqrt(deviations / input.size());
 
