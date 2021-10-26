@@ -13,8 +13,7 @@ public class HypothesisTester {
         if (test_type == 1) {
             significance = 1 - significance;
         }
-        double actual_significance = this.CalculateSignificance(sample, mu);
-        return new TestSummary(expected_significance, actual_significance,expected_significance >= actual_significance, test_type);
+        return new TestSummary(expected_significance, significance,expected_significance >= significance, test_type);
     }
 
     public double CalculateSignificance(ArrayList<Double> sample, double mu) {
