@@ -1,4 +1,4 @@
-package tests;
+package com.jam.jamcougstatistics;
 
 import com.jam.jamcougstatistics.ZScoreSignificanceCalculator;
 import org.junit.jupiter.api.Test;
