@@ -9,7 +9,6 @@ module com.jam.jamcougstatistics {
     requires org.kordamp.bootstrapfx.core;
     //requires eu.hansolo.tilesfx;
     requires commons.math3;
-    requires org.junit.jupiter.api;
 
     opens com.jam.jamcougstatistics to javafx.fxml;
     exports com.jam.jamcougstatistics;
