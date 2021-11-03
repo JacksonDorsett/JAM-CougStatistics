@@ -9,7 +9,7 @@ public class TScoreSignificanceCalculator extends SignificanceCalculator {
     private double degrees_of_freedom;
 
     @Override
-    double CalculateSignificance(double score) {
+    public double CalculateSignificance(double score) {
         TDistribution td = new TDistribution(degrees_of_freedom);
         return td.cumulativeProbability(score);
     }
