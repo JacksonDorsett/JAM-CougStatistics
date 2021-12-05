@@ -68,9 +68,7 @@ public static DataSlots<Double> DataSetFromLines(String[] lines) {
     }
     return data;
 }
-    public static DataSlots<Double> LoadDataSet(File file) throws FileNotFoundException {
-        InputStream ifstream = new FileInputStream(file);
-        InputStreamReader ireader = new InputStreamReader(ifstream);
+    public static DataSlots<Double> LoadDataSet(Reader ireader) {
         BufferedReader reader = new BufferedReader(ireader);
         return DataSetFromLines(reader.lines().toArray(String[]::new));
     }

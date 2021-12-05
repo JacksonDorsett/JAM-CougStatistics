@@ -6,6 +6,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class HelloController {
@@ -72,12 +75,12 @@ public class HelloController {
     DataSlots<Double> slots = new DataSlots<>(2);
 
     public void initialize() {
-        tScoreMu.textProperty().addListener((observable, oldValue, newValue)->{
-            setTScore(newValue);
-        });
-        zScoreX.textProperty().addListener((observable, oldValue, newValue)->{
-            setZScore(newValue);
-        });
+        tScoreMu.textProperty().addListener((observable, oldValue, newValue)->
+            setTScore(newValue)
+        );
+        zScoreX.textProperty().addListener((observable, oldValue, newValue)->
+            setZScore(newValue)
+        );
 
         setSlotStrings();
         setOutputs();
@@ -127,7 +130,7 @@ public class HelloController {
                 System.out.println(mu);
             }
             else{
-                if (populationField.getText() == ""){
+                if (populationField.getText().length()==0){
                     throw new Exception("Error: population must be specified");
                 }
                 mu = Double.parseDouble(populationField.getText());
@@ -166,7 +169,7 @@ public class HelloController {
             HypothesisTester ht = new HypothesisTester();
             setTestResults(ht.TestHypothesis(slot,mu,tType,expectedSig));
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getMessage());
             setTestResults(null);
             Alert a = new Alert(Alert.AlertType.ERROR,e.toString());
             a.showAndWait();
@@ -175,12 +178,13 @@ public class HelloController {
     }
 
     protected void setTestResults(TestSummary summary){
-        if (summary == null){
+        if (summary == null) {
             testUsedBox.setText(noDataString);
             sampleUsedBox.setText(noDataString);
             scoreBox.setText(noDataString);
             significanceBox.setText(noDataString);
             testPassedBox.setText(noDataString);
+            return;
         }
 
         testUsedBox.setText(summary.getTestType());
@@ -233,7 +237,10 @@ public class HelloController {
                 warning.showAndWait();
             }
 
-            DataSlots<Double> loadedSlots = DataLoader.LoadDataSet(selected_file);
+            assert selected_file != null;
+            InputStream fileStream = new FileInputStream(selected_file);
+            InputStreamReader fileReader = new InputStreamReader(fileStream);
+            DataSlots<Double> loadedSlots = DataLoader.LoadDataSet(fileReader);
 
             // If only one dataset is loaded in...
             if (!loadedSlots.hasSlot(1)) {
