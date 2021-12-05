@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 public class BasicStats {
     
     public static <T extends Number> double Mean(List<T> dataList) {
+        if (dataList.isEmpty()) {
+            return Integer.valueOf(0);
+        }
+
         double sum = 0;
         
         for (T num : dataList) {
@@ -21,6 +25,10 @@ public class BasicStats {
     }
 
     public static <T extends Number> double Median(List<T> dataList) {
+        if (dataList.isEmpty()) {
+            return Integer.valueOf(0);
+        }
+
         List<T> sorted = dataList.stream().sorted().collect(Collectors.toList());
         int midpoint = sorted.size() / 2;
         // if the list size is even
@@ -34,6 +42,10 @@ public class BasicStats {
     }
     
     public static <T extends Number> T Mode(List<T> dataList) {
+        if (dataList.isEmpty()) {
+            return (T) Integer.valueOf(0);
+        }
+
         T maxValue = dataList.get(0);
         int maxCount = 0;
         Map<T,Integer> counts = new HashMap<>();
