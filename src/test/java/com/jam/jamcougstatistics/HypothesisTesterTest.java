@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HypothesisTesterTest {
 
     @Test
-    void testHypothesis() {
+    void testHypothesis() throws NoDataException {
         ArrayList<Double> small_data = new ArrayList<>(Arrays.asList(1.0d, 1.0d, 1.0d, 2.0d, 3.0d, 4.0d, 2.0d, 4.0d));
         HypothesisTester tester = new HypothesisTester();
         float mu = 3;
@@ -36,7 +36,7 @@ class HypothesisTesterTest {
     }
 
     @Test
-    void calculateSignificance() {
+    void calculateSignificance() throws NoDataException {
         ArrayList<Double> small_data = new ArrayList<>(Arrays.asList(1d,3.0d, 2.5d, 2.0d,4d,5d,1d));
         // test small dataset
         float mu = 3;
@@ -53,33 +53,33 @@ class HypothesisTesterTest {
     //edge case
     @Test
     void testSignificanceForEmptyInput(){
-        ArrayList<Double> no_data = new ArrayList<Double>();
+        ArrayList<Double> no_data = new ArrayList<>();
         float mu = 4;
         HypothesisTester tester = new HypothesisTester();
-        Exception exception = assertThrows(NoDataException.class, () -> {
+        Exception exception = assertThrows(NoDataException.class, () ->
             tester.CalculateSignificance(no_data,mu)
-        });
-        assertEquals("Cannot calculate significance without data points.", exception.getMessage())
+        );
+        assertEquals("Cannot calculate significance without data points.", exception.getMessage());
     }
 
     @Test
     void testHypothesisForEmptyInput(){
-        ArrayList<Double> no_data = new ArrayList<Double>();
-        float = mu = 4;
+        ArrayList<Double> no_data = new ArrayList<>();
+        float mu = 4;
         HypothesisTester tester = new HypothesisTester();
         //change test type, const significance
-        assertThrows(NoDataException.class, () -> {tester.test_hypothesis(no_data,mu,1,.05d)});
-        assertThrows(NoDataException.class, () -> {tester.test_hypothesis(no_data,mu,0,.05d)});
-        assertThrows(NoDataException.class, () -> {tester.test_hypothesis(no_data,mu,-1,.05d)});
+        assertThrows(NoDataException.class, () -> tester.TestHypothesis(no_data,mu,1,.05d));
+        assertThrows(NoDataException.class, () -> tester.TestHypothesis(no_data,mu,0,.05d));
+        assertThrows(NoDataException.class, () -> tester.TestHypothesis(no_data,mu,-1,.05d));
         //const test type, change significance
-        assertThrows(NoDataException.class, () -> {tester.test_hypothesis(no_data,mu,1,.55d)});
-        assertThrows(NoDataException.class, () -> {tester.test_hypothesis(no_data,mu,1,.1d)});
+        assertThrows(NoDataException.class, () -> tester.TestHypothesis(no_data,mu,1,.55d));
+        assertThrows(NoDataException.class, () -> tester.TestHypothesis(no_data,mu,1,.1d));
     }
 
     @Test
-    void testSignificanceWithNoVariance(){
-        ArrayList<Double> data = new ArrayList<Double>();
-        for(int i = 0; i < 50; i++) data.add(5);
+    void testSignificanceWithNoVariance() throws NoDataException {
+        ArrayList<Double> data = new ArrayList<>();
+        for(int i = 0; i < 50; i++) data.add(5.0);
         float mu = 5;
         HypothesisTester tester = new HypothesisTester();
 
@@ -93,9 +93,9 @@ class HypothesisTesterTest {
     }
 
     @Test
-    void testSmallSignificanceWithNoVariance(){
-        ArrayList<Double> data = new ArrayList<Double>();
-        for(int i = 0; i < 5; i++) data.add(5);
+    void testSmallSignificanceWithNoVariance() throws NoDataException {
+        ArrayList<Double> data = new ArrayList<>();
+        for(int i = 0; i < 5; i++) data.add(5.0);
         float mu = 5;
         HypothesisTester tester = new HypothesisTester();
 
@@ -108,25 +108,25 @@ class HypothesisTesterTest {
     }
 
     @Test
-    void testHypothesisWithoutVariance(){
-        ArrayList<Double> big_data = new ArrayList<Double>();
-        for(int i = 0; i < 50; i++) data.add(5);
+    void testHypothesisWithoutVariance() throws NoDataException {
+        ArrayList<Double> big_data = new ArrayList<>();
+        for(int i = 0; i < 50; i++) big_data.add(5.0);
         float mu = 4;
         HypothesisTester tester = new HypothesisTester();
 
-        assertEquals(0d, tester.test_hypothesis(big_data,mu,-1d,.05).getSignificanceScore());
-        assertEquals(1d, tester.test_hypothesis(big_data,mu,0d,.05).getSignificanceScore());
-        assertEquals(1d, tester.test_hypothesis(big_data,mu,1d,.05).getSignificanceScore());
+        assertEquals(0d, tester.TestHypothesis(big_data,mu,-1,.05).getSignificanceScore());
+        assertEquals(1d, tester.TestHypothesis(big_data,mu,0,.05).getSignificanceScore());
+        assertEquals(1d, tester.TestHypothesis(big_data,mu,1,.05).getSignificanceScore());
 
         mu = 5;
-        assertEquals(Double.NaN, tester.test_hypothesis(big_data,mu,-1d,.05).getSignificanceScore());
-        assertEquals(Double.NaN, tester.test_hypothesis(big_data,mu,0d,.05).getSignificanceScore());
-        assertEquals(Double.NaN, tester.test_hypothesis(big_data,mu,1d,.05).getSignificanceScore());
+        assertEquals(Double.NaN, tester.TestHypothesis(big_data,mu,-1,.05).getSignificanceScore());
+        assertEquals(Double.NaN, tester.TestHypothesis(big_data,mu,0,.05).getSignificanceScore());
+        assertEquals(Double.NaN, tester.TestHypothesis(big_data,mu,1,.05).getSignificanceScore());
 
         mu = 6;
-        assertEquals(1d, tester.test_hypothesis(big_data,mu,-1d,.05).getSignificanceScore());
-        assertEquals(1d, tester.test_hypothesis(big_data,mu,0d,.05).getSignificanceScore());
-        assertEquals(0d, tester.test_hypothesis(big_data,mu,1d,.05).getSignificanceScore());
+        assertEquals(1d, tester.TestHypothesis(big_data,mu,-1,.05).getSignificanceScore());
+        assertEquals(1d, tester.TestHypothesis(big_data,mu,0,.05).getSignificanceScore());
+        assertEquals(0d, tester.TestHypothesis(big_data,mu,1,.05).getSignificanceScore());
 
     }
 }
