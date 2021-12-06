@@ -14,6 +14,7 @@ public class IntegrationTest {
         HelloController testController = new HelloController();
         testController.initialize();
 
+        // Equivalence case where there is no data
         Assert.assertEquals("Expected No data", "No data", testController.meanOutput);
         Assert.assertEquals("Expected No data", "No data", testController.medianOutput);
         Assert.assertEquals("Expected No data", "No data", testController.modeOutput);
@@ -27,6 +28,7 @@ public class IntegrationTest {
         when(BasicStats.SD(Mockito.any())).thenReturn(0.43);
         when(BasicStats.Range(Mockito.any())).thenReturn(1.0);
 
+        // Equivalence case 2 there is data present
         testController.LoadData("src/Data/test.csv");
         Assert.assertEquals("Expected 1.25", "1.25", testController.meanOutput);
         Assert.assertEquals("Expected 1.0", "1.0", testController.medianOutput);
@@ -53,10 +55,12 @@ public class IntegrationTest {
         HelloController testController = new HelloController();
         testController.initialize();
 
+        // Equivalence class case 1, there is no data
         Assert.assertEquals("Expected No data", "No data", testController.zScoreOutput);
 
         Whitebox.setInternalState(testController, "zScoreX", "1.5");
 
+        // equivalence class cases where there is data
         testController.LoadData("src/Data/test.csv");
         Assert.assertEquals("Expected 0.5773502588272095", "0.5773502588272095", testController.zScoreOutput);
 
@@ -72,10 +76,12 @@ public class IntegrationTest {
         HelloController testController = new HelloController();
         testController.initialize();
 
+        // Equivalence class case, no data
         Assert.assertEquals("Expected No data", "No data", testController.tScoreOutput);
 
         Whitebox.setInternalState(testController, "tScoreMu", "1.5");
 
+        // Equivalence class case, data present
         testController.LoadData("src/Data/test.csv");
         Assert.assertEquals("Expected -1.0", "-1.0", testController.tScoreOutput);
 
@@ -105,23 +111,28 @@ public class IntegrationTest {
 
         testController.LoadData("src/Data/test.csv");
         testController.onTestClick();
+        // Testing equivalence case where comparison is greater or equal to, significance is 0.1
         Assert.assertEquals("Expected ≥", "≥", testController.testUsedBox);
         Assert.assertEquals("Expected [1.0, 2.0, 1.0, 1.0]", "[1.0, 2.0, 1.0, 1.0]", testController.sampleUsedBox);
         Assert.assertEquals("Expected 0.1", "0.1", testController.significanceBox);
         Assert.assertEquals("Expected true", "true", testController.testPassedBox);
 
+        // Testing equivalence case where significance is 0.05
         testController.alphaGroup = 1;
         testController.onTestClick();
         Assert.assertEquals("Expected 0.05", "0.05", testController.significanceBox);
 
+        // Testing case where significance is 0.01
         testController.alphaGroup = 2;
         testController.onTestClick();
         Assert.assertEquals("Expected 0.01", "0.01", testController.significanceBox);
 
+        // Testing case where comparison is less than or equal to
         testController.testType = 1;
         testController.onTestClick();
         Assert.assertEquals("Expected ≤", "≤", testController.testUsedBox);
 
+        // Testing case where comparison is not equal to
         testController.testType = 2;
         testController.onTestClick();
         Assert.assertEquals("Expected ≠", "≠", testController.testUsedBox);
